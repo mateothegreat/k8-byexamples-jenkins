@@ -26,12 +26,15 @@ Usage:
 
 Targets:
 
+  password             Retrieve temporary password from /var/jenkins_home/secrets/initialAdminPassword
   manifests            Output manifests detected (used with make install, delete, get, describe, etc)
   install              Installs manifests to kubernetes using kubectl apply (make manifests to see what will be installed)
   delete               Deletes manifests to kubernetes using kubectl delete (make manifests to see what will be installed)
   get                  Retrieves manifests to kubernetes using kubectl get (make manifests to see what will be installed)
   describe             Describes manifests to kubernetes using kubectl describe (make manifests to see what will be installed)
   logs                 Find first pod and follow log output
+  context              Globally set the current-context (default namespace)
+  shell                Grab a shell in a running container
 ```
 
 ## Install
