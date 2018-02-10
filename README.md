@@ -43,3 +43,13 @@ $ make install
 [ INSTALLING MANIFESTS/PERSISTENTVOLUMECLAIM.YAML ]: persistentvolumeclaim "jenkins-persistent-storage" unchanged
 [ INSTALLING MANIFESTS/SERVICE.YAML ]: service "jenkins-ui" configured
 ```
+
+## Delete
+
+```sh
+$ md
+
+[ DELETING MANIFESTS/DEPLOYMENT.YAML ]: deployment "jenkins-deployment" deleted
+[ DELETING MANIFESTS/PERSISTENTVOLUMECLAIM.YAML ]: persistentvolumeclaim "jenkins-persistent-storage" deleted
+[ DELETING MANIFESTS/SERVICE.YAML ]: service "jenkins-ui" deleted
+```

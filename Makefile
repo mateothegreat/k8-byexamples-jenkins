@@ -11,5 +11,8 @@ NS              ?= default
 APP             ?= jenkins
 export
 
-logs-init: ;	kubectl --namespace $(NS) logs -f $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -c jenkins-init
-logs-jenkins: ;	kubectl --namespace $(NS) logs -f $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -c jenkins
+## Retrieve temporary password from /var/jenkins_home/secrets/initialAdminPassword
+password:       ; kubectl exec $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -it -- cat /var/jenkins_home/secrets/initialAdminPassword
+
+logs-init:      ; kubectl --namespace $(NS) logs -f $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -c jenkins-init
+logs-jenkins:   ; kubectl --namespace $(NS) logs -f $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -c jenkins
