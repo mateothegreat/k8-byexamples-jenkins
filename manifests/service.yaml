@@ -16,16 +16,3 @@
         port: 50000
         targetPort: 50000
         name: slaves
----
-  kind: Service
-  apiVersion: v1
-  metadata:
-    name: jenkins-discovery
-  spec:
-    selector:
-      app: jenkins
-    ports:
-      - protocol: TCP
-        port: 50000
-        targetPort: 50000
-        name: slaves
