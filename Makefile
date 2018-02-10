@@ -8,5 +8,8 @@
 include .make/Makefile.inc
 
 NS              ?= default
-APP             ?= app
+APP             ?= jenkins
 export
+
+logs-init: ;	kubectl --namespace $(NS) logs -f $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -c jenkins-init
+logs-jenkins: ;	kubectl --namespace $(NS) logs -f $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -c jenkins

@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1 # for versions before 1.7.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      securityContext:
+        runAsUser: 0
+      containers:
+      - name: jenkins
+        image: appsoa/docker-alpine-jenkins
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        - containerPort: 50001
+        readinessProbe:
+            tcpSocket:
+                port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 20
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1500Mi
+          requests:
+            cpu: 500m
+            memory: 1500Mi
+        volumeMounts:
+        - mountPath: /var/run
+          name: docker-sock
+        - mountPath: /var/jenkins_home
+          name: jenkins-home
+        # securityContext:
+        #     allowPrivilegeEscalation: true
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run
+      - name: jenkins-home
+        persistentVolumeClaim:
+          claimName: jenkins-persistent-storage

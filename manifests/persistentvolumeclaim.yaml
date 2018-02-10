@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: grafana-persistent-storage
+  name: jenkins-persistent-storage
   labels:
-    app: grafana-persistent-storage
+    app: jenkins-persistent-storage
 spec:
   accessModes:
     - ReadWriteOnce
