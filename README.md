@@ -13,7 +13,9 @@
 
 #
 
-> k8 by example -- straight to the point, simple execution.
+Deploy Jenkins with a `make install`.
+
+Don't forget to button it up with https://github.com/mateothegreat/k8-byexamples-cert-manager and get fancy with https://github.com/mateothegreat/k8-byexamples-keycloak!
 
 ## Usage
 
