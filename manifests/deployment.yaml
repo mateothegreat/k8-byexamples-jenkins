@@ -16,11 +16,22 @@ spec:
         runAsUser: 0
       containers:
       - name: jenkins
-        image: appsoa/docker-alpine-jenkins
+        image: mateothegreat/docker-alpine-jenkins-gcloud
         ports:
-        - containerPort: 8080
-        - containerPort: 50000
-        - containerPort: 50001
+
+          - containerPort: 8080
+          - containerPort: 50000
+          - containerPort: 50001
+          
+        env:
+        
+          - name: GCLOUD_KEY_FILE
+            value: "/service_account/nodetech-devops-01-fbcb7a2259f9.json"
+          - name: GCLOUD_PROJECT
+            value: "nodetech-devops-01"
+          - name: GCLOUD_ZONE
+            value: "us-central1-a"
+
         readinessProbe:
             tcpSocket:
                 port: 8080
@@ -34,16 +45,27 @@ spec:
             cpu: 500m
             memory: 1500Mi
         volumeMounts:
+        
         - mountPath: /var/run
           name: docker-sock
+        
         - mountPath: /var/jenkins_home
           name: jenkins-home
-        # securityContext:
-        #     allowPrivilegeEscalation: true
+        
+        - name: gcloud-jenkins
+          mountPath: "/service_account"
+          readOnly: true
+
       volumes:
+
       - name: docker-sock
         hostPath:
           path: /var/run
+
       - name: jenkins-home
         persistentVolumeClaim:
           claimName: jenkins-persistent-storage
+
+      - name: gcloud-jenkins
+        secret:
+          secretName: gcloud-jenkins          
