@@ -49,6 +49,16 @@ $ make install
 [ INSTALLING MANIFESTS/SERVICE.YAML ]: service "jenkins-ui" configured
 ```
 
+## Get the initial password
+
+```sh
+
+$ make password 
+kubectl exec jenkins-deployment-7449f6d84f-pkq52 -it -- cat /var/jenkins_home/secrets/initialAdminPassword
+
+9216363c424f4effbe920f32376ee7ef
+
+```
 ## Delete
 
 ```sh
