@@ -18,7 +18,7 @@ spec:
 
       - name: jenkins
         image: mateothegreat/docker-alpine-jenkins-gcloud
-        imagePullPolicy: always
+        imagePullPolicy: Always
 
         ports:
           - containerPort: 8080
