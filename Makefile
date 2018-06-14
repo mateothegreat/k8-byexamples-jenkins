@@ -15,6 +15,17 @@ GCLOUD_KEY_FILE	?= /service_account/service_account.json
 GCLOUD_PROJECT	?= streaming-platform-devqa
 GCLOUD_ZONE		?= us-central1-a
 
+
+## Create persistent disk
+create-disk:
+
+	gcloud compute disks create $(PERSISTENT_DISK) --zone $(GCLOUD_ZONE) --size 10
+
+## Create secret with service_account.json for Google Cloud Platform
+secret-create:
+
+	kubectl create secret generic $(GCLOUD_SECRET) -n $(NS) --from-file service_account.json
+
 ## Retrieve temporary password from /var/jenkins_home/secrets/initialAdminPassword
 password:       ; kubectl exec $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -it -- cat /var/jenkins_home/secrets/initialAdminPassword
 
