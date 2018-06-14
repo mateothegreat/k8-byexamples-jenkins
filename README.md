@@ -49,6 +49,12 @@ $ make install
 [ INSTALLING MANIFESTS/SERVICE.YAML ]: service "jenkins-ui" configured
 ```
 
+## Setup Google Cloud Platform Access
+Create a service account with at least the following permissions:
+
+![GCP Service Account](assets/gcp-iam.png)
+
+Place your service account json in a file named service_account.json in the root directory of this repository.
 ## Get the initial password
 
 ```sh

@@ -1,42 +1,42 @@
 apiVersion: extensions/v1beta1 # for versions before 1.7.0 use apps/v1beta1
 kind: Deployment
 metadata:
-  name: jenkins-deployment
+  name: $APP
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jenkins
+      app: $APP
   template:
     metadata:
       labels:
-        app: jenkins
+        app: $APP
     spec:
       securityContext:
         runAsUser: 0
       containers:
       - name: jenkins
         image: mateothegreat/docker-alpine-jenkins-gcloud
-        ports:
 
+        ports:
           - containerPort: 8080
           - containerPort: 50000
           - containerPort: 50001
           
         env:
-        
           - name: GCLOUD_KEY_FILE
-            value: "/service_account/nodetech-devops-01-fbcb7a2259f9.json"
+            value: $GCLOUD_KEY_FILE
           - name: GCLOUD_PROJECT
-            value: "nodetech-devops-01"
+            value: $GCLOUD_PROJECT
           - name: GCLOUD_ZONE
-            value: "us-central1-a"
+            value: $GCLOUD_ZONE
 
         readinessProbe:
             tcpSocket:
                 port: 8080
-            initialDelaySeconds: 40
+            initialDelaySeconds: 120
             periodSeconds: 20
+
         resources:
           limits:
             cpu: 500m
@@ -44,17 +44,18 @@ spec:
           requests:
             cpu: 500m
             memory: 1500Mi
+
         volumeMounts:
         
-        - mountPath: /var/run
-          name: docker-sock
-        
-        - mountPath: /var/jenkins_home
-          name: jenkins-home
-        
-        - name: gcloud-jenkins
-          mountPath: "/service_account"
-          readOnly: true
+          - mountPath: /var/run
+            name: docker-sock
+
+          - mountPath: /var/jenkins_home
+            name: $PERSISTENT_DISK
+
+          - name: $GCLOUD_SECRET
+            mountPath: "/service_account"
+            readOnly: true
 
       volumes:
 
@@ -62,10 +63,10 @@ spec:
         hostPath:
           path: /var/run
 
-      - name: jenkins-home
+      - name: $PERSISTENT_DISK
         persistentVolumeClaim:
-          claimName: jenkins-persistent-storage
+          claimName: $PERSISTENT_DISK
 
-      - name: gcloud-jenkins
+      - name: $GCLOUD_SECRET
         secret:
-          secretName: gcloud-jenkins          
+          secretName: $GCLOUD_SECRET

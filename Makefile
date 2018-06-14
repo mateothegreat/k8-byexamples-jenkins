@@ -9,7 +9,11 @@ include .make/Makefile.inc
 
 NS              ?= default
 APP             ?= jenkins
-export
+PERSISTENT_DISK	?= $(APP)-persistent-storage
+GCLOUD_SECRET	?= gcloud-jenkins
+GCLOUD_KEY_FILE	?= /service_account/service_account.json
+GCLOUD_PROJECT	?= streaming-platform-devqa
+GCLOUD_ZONE		?= us-central1-a
 
 ## Retrieve temporary password from /var/jenkins_home/secrets/initialAdminPassword
 password:       ; kubectl exec $(shell kubectl get pods --all-namespaces -lapp=$(APP) -o jsonpath='{.items[0].metadata.name}') -it -- cat /var/jenkins_home/secrets/initialAdminPassword
