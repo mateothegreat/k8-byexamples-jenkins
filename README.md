@@ -17,6 +17,7 @@ Don't forget to button things up with https://github.com/mateothegreat/k8-byexam
 
 ![jankins](assets/clustering-jenkins-with-kubernetes-blog-pic3.png)
 
+This deployment uses my custom docker image with Jenkins built on alpine inlcuding gradle & gcloud sdk (https://github.com/mateothegreat/docker-alpine-jenkins-gcloud).
 ## Usage
 
 ```sh

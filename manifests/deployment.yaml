@@ -15,8 +15,10 @@ spec:
       securityContext:
         runAsUser: 0
       containers:
+
       - name: jenkins
         image: mateothegreat/docker-alpine-jenkins-gcloud
+        imagePullPolicy: always
 
         ports:
           - containerPort: 8080
